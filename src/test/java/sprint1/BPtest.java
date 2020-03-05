@@ -109,33 +109,14 @@ class BPtest
 		assertEquals(strategy,goal.getParent());
 		assertEquals(objective,goal.getChildren().get(0));
 		
+		
 		//test XML: store & read back
-		String SERIALIZED_FILE_NAME="businessPlan1.xml";
-		XMLEncoder encoder=null;
-		try{
-			encoder=new XMLEncoder(new BufferedOutputStream(new FileOutputStream(SERIALIZED_FILE_NAME)));
-			}
-		catch(FileNotFoundException fileNotFound){
-				System.out.println("ERROR: While Creating or Opening the File dvd.xml");
-			}
-			encoder.writeObject(VMOSAplan);
-			encoder.close();
-		
-		
-		XMLDecoder decoder=null;
-		try {
-			decoder=new XMLDecoder(new BufferedInputStream(new FileInputStream(SERIALIZED_FILE_NAME)));
-		} catch (FileNotFoundException e) {
-			System.out.println("ERROR: File dvd.xml not found");
-		}
-		BusinessPlan VMOSAplanDeCode=(BusinessPlan)decoder.readObject();
-		
+		String SERIALIZED_FILE_NAME="BusinessPlan1.xml";
+		VMOSAplan.XMLEncode(SERIALIZED_FILE_NAME);
+		BusinessPlan VMOSAplanDeCode=VMOSAplan.XMLDecode(SERIALIZED_FILE_NAME);
 		System.out.println(VMOSAplanDeCode);
 		System.out.println(VMOSAplan);
-		
-		//assertEquals(VMOSAplanDeCode.getAssessment(),VMOSAplan.getAssessment());
-		//assertEquals(VMOSAplanDeCode.getLeadingPart(),VMOSAplan.getLeadingPart());
-		
+		assertEquals(VMOSAplanDeCode.toString(),VMOSAplan.toString());
 		
 	}
 	

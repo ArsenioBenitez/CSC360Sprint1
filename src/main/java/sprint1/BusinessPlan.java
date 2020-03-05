@@ -1,5 +1,12 @@
 package sprint1;
 import java.util.*;
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.time.*;
 
 public abstract class BusinessPlan {
@@ -96,4 +103,25 @@ public abstract class BusinessPlan {
 	public abstract void addLeadingPart (Part part1);
 	//part 1 is the child of part 2
 	public abstract void addPart (Part part1, Part part2);
+	
+	public void XMLEncode(String filename) {
+		XMLEncoder encoder=null;
+		try{
+			encoder=new XMLEncoder(new BufferedOutputStream(new FileOutputStream(filename)));
+			}
+		catch(FileNotFoundException fileNotFound){
+				System.out.println("ERROR: While Creating or Opening the File dvd.xml");
+			}
+			encoder.writeObject(this);
+			encoder.close();
+	}
+	public BusinessPlan XMLDecode(String filename) {
+		XMLDecoder decoder=null;
+		try {
+			decoder=new XMLDecoder(new BufferedInputStream(new FileInputStream(filename)));
+		} catch (FileNotFoundException e) {
+			System.out.println("ERROR: File "+filename+" not found");
+		}
+		return (BusinessPlan)decoder.readObject();
+	}
 }
